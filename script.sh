@@ -9,14 +9,14 @@ check_success() {
 }
 
 echo "Atualizando o servidor..."
-apt-get update -y
+sudo apt-get update -y
 check_success "Falha na atualização dos pacotes"
 
-apt-get upgrade -y
+sudo apt-get upgrade -y
 check_success "Falha na atualização dos pacotes"
 
 echo "Instalando Apache e unzip..."
-apt-get install apache2 unzip -y
+sudo apt-get install apache2 unzip -y
 check_success "Falha na instalação do Apache ou unzip"
 
 echo "Baixando e copiando os arquivos da aplicação..."
@@ -36,16 +36,16 @@ check_success "Falha ao descompactar o arquivo main.zip"
 cd linux-site-dio-main || { echo "Falha ao acessar o diretório linux-site-dio-main. Abortando."; exit 1; }
 
 # Copia os arquivos para o diretório do Apache
-cp -R * /var/www/html/
+sudo cp -R * /var/www/html/
 check_success "Falha ao copiar os arquivos para /var/www/html/"
 
 # Ajusta permissões para garantir que o Apache possa ler os arquivos
-chown -R www-data:www-data /var/www/html/
-chmod -R 755 /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/
+sudo chmod -R 755 /var/www/html/
 check_success "Falha ao ajustar permissões dos arquivos"
 
 # Reinicia o Apache para aplicar as mudanças
-systemctl restart apache2
+sudo systemctl restart apache2
 check_success "Falha ao reiniciar o Apache"
 
 echo "Servidor web configurado com sucesso!"
